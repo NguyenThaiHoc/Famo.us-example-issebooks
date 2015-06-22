@@ -37,6 +37,21 @@ var unitListImage = ['images/welcome.png','images/unit1.png','images/unit2.png',
                     'images/unit4.png','images/unit10.PNG','images/review1.png','images/unit7.PNG',
                     'images/unit8.PNG','images/unit9.png','images/unit10.PNG','images/review2.png',]
 
+
+//---------------DATA PAGE 4---------------------
+var words = ['Phong', 'Quan', 'Fine', 'And you', 'Fine'];
+var haha = ['fdsf', 'fdsfs', 'rewrwe', 'yrtytr', 'rwqrew']
+var boxAlignX = 0.05;
+var boxAlignY = 0.15;
+var widthBoxText = widthPage*0.9;
+var heightBoxText = 70;
+var heightWord = 40;
+var widthWord = 120;
+
+// ----------------DATA PAGE 5----------------------
+
+
+
 var timeAnimation = 3000;
 function Pager (node, options) {
     this.node = node;
@@ -115,6 +130,99 @@ function animationUnit(position){
         position.set(0,0,0, {duration: timeAnimation, curve: 'outQuad'}, animationUnit(position));
     }
 }
+
+function PageListenRepeat(imageNode){
+    var sentence1 = imageNode.addChild(); 
+    var sentence1DIV= new DOMElement(sentence1, {
+        content: '<p>_______________<p>'
+    });
+    sentence1.setSizeMode('absolute', 'absolute')
+              .setAbsoluteSize(widthPage*0.3, heightPage*0.3)
+              .setAlign(0.35,0.39);
+
+    var sentence2 = imageNode.addChild(); 
+    var sentence2DIV= new DOMElement(sentence2, {
+        content: '<p>_______________</p>'
+    });
+    sentence2.setSizeMode('absolute', 'absolute')
+              .setAbsoluteSize(widthPage*0.3, heightPage*0.3)
+              .setAlign(0.75,0.42);
+
+    var show = imageNode.addChild();
+    var showDIV = new DOMElement(show,{
+        content: '<button class = "showbutton">Show</button>'
+    });
+    show.setSizeMode('absolute', 'absolute')
+              .setAbsoluteSize(widthPage*0.3, heightPage*0.3)
+              .setAlign(0.6,0.8)
+              .setPosition(0, 0);
+
+    var showgestures = new GestureHandler(show);
+    showgestures.on('tap', function(){
+        sentence1DIV.setContent('<p>Hello. I am Mai</p>');
+        setTimeout(function(){ sentence2DIV.setContent('<p>Hi, Mai. I am Nam</p>'); }, 600);
+    });
+}
+
+function PageDragWord(imageNode, words){
+    var box = imageNode.addChild();
+
+    box.setSizeMode('absolute', 'absolute')
+              .setAbsoluteSize(widthBoxText,heightBoxText* Math.ceil(words.length/3))
+              .setAlign(boxAlignX, boxAlignY)
+              .setPosition(0,0);
+
+    var boxDIV = new DOMElement(box, {
+        properties: {
+            'background-color': '#FAAC58'
+        }
+    });
+
+    var wordsEle = [];
+    var wordsEleDIV = [];
+    var wordgestures =[];
+    for(var j = 0; j< words.length; j++){
+        wordsEle[j] = box.addChild();
+        wordsEle[j].setSizeMode('absolute', 'absolute')
+              .setAbsoluteSize(widthWord, heightWord)
+              .setAlign(0, 0)
+              .setPosition(widthBoxText/3*(j%3), heightBoxText*(j/3));
+        wordsEleDIV = new DOMElement(wordsEle[j],{
+            properties:{
+                'background-color': '#ffffff',
+            },
+            content: '<p class ="textInBox">'+words[j]+'</p>'
+        });
+        wordgestures[j] = new GestureHandler(wordsEle[j]);
+    }
+
+    //fix code events
+    wordgestures[0].on('drag', function(e){
+            console.log(e.pointers[0].position.x+" "+ e.pointers[0].position.y + "  "+j)
+            wordsEle[0].setPosition(e.pointers[0].position.x-boxAlignX*widthPage-(widthScreen- widthPage)/2 - widthWord/2, 
+                                    e.pointers[0].position.y-boxAlignY*heightPage -(heightScreen - heightPage)/2 - heightWord/2);
+        });
+    wordgestures[1].on('drag', function(e){
+            console.log(e.pointers[0].position.x+" "+ e.pointers[0].position.y + "  "+j)
+            wordsEle[1].setPosition(e.pointers[0].position.x-boxAlignX*widthPage-(widthScreen- widthPage)/2 - widthWord/2, 
+                                    e.pointers[0].position.y-boxAlignY*heightPage -(heightScreen - heightPage)/2 - heightWord/2);
+        });
+    wordgestures[2].on('drag', function(e){
+            console.log(e.pointers[0].position.x+" "+ e.pointers[0].position.y + "  "+j)
+            wordsEle[2].setPosition(e.pointers[0].position.x-boxAlignX*widthPage-(widthScreen- widthPage)/2 - widthWord/2, 
+                                    e.pointers[0].position.y-boxAlignY*heightPage -(heightScreen - heightPage)/2 - heightWord/2);
+        });
+    wordgestures[3].on('drag', function(e){
+            console.log(e.pointers[0].position.x+" "+ e.pointers[0].position.y + "  "+j)
+            wordsEle[3].setPosition(e.pointers[0].position.x-boxAlignX*widthPage-(widthScreen- widthPage)/2 - widthWord/2, 
+                                    e.pointers[0].position.y-boxAlignY*heightPage -(heightScreen - heightPage)/2 - heightWord/2);
+        });
+    wordgestures[4].on('drag', function(e){
+            console.log(e.pointers[0].position.x+" "+ e.pointers[0].position.y + "  "+j)
+            wordsEle[4].setPosition(e.pointers[0].position.x-boxAlignX*widthPage-(widthScreen- widthPage)/2 - widthWord/2, 
+                                    e.pointers[0].position.y-boxAlignY*heightPage -(heightScreen - heightPage)/2 - heightWord/2);
+        });
+}
 function _createPages(root, pageData) {
     var pages = [];
 
@@ -126,9 +234,6 @@ function _createPages(root, pageData) {
         imageNode.setAlign(0.5, 0.5);
         imageNode.setMountPoint(0.5, 0.5);
         imageNode.setOrigin(0.5, 0.5);
-
-
-
         // modify page
 
         // ------------------Page 3
@@ -268,78 +373,39 @@ function _createPages(root, pageData) {
         }
         // ------------------Page 4
         if(i === 3){
-            var staticNode = imageNode.addChild();
-            // Size node 50px by 50px
-            staticNode.setSizeMode('absolute', 'absolute')
-                      .setAbsoluteSize(widthPage*0.3, heightPage*0.3)
-                      .setAlign(0.4,0.4)
-                      .setPosition(0,0);
-
-
-            var basicElement = new DOMElement(imageNode, { 
-                // content: '<input type="text" name="fname" placeholder="Search...">',
-                content: '<button>Click me</button>',
-                contenteditable: true
-                
-            });
-            // imageNode.setProportionalSize(1, 0.5);
-
-
-            basicElement.addClass('zindex1000')
-            // set its content
-            // basicElement.setContent('');
-        
-
-            var tagDIV = new DOMElement(staticNode, { 
-              properties:{
-                'background-color':'#FF0000'
-              } 
-            });
-
-            var gestures = new GestureHandler(staticNode);
-            function callback() { console.log('Gesture'); }
-            gestures.on('tap', callback);
-    
-
-
+            PageDragWord(imageNode, words);
         }
 
         //---------------------------page5
         if(i === 4){
-            var sentence1 = new DOMElement(imageNode, {
-                content: 'haha'
-            });
+            PageListenRepeat(imageNode);
         }
 
+        // var gestureHandler = new GestureHandler(imageNode);
+        //     gestureHandler.on('drag', function(index, e) {
+        //             this.force.set(e.centerDelta.x, 0, 0); // Add a force equal to change in X direction
+        //             this.force.scale(20); // Scale the force up
+        //             this.pages[index].box.applyForce(this.force); // Apply the force to the `Box` body
 
+        //             if (e.centerVelocity.x > this.threshold) {
+        //                 if (this.draggedIndex === index && this.currentIndex === index) {
+        //                     // Move index to left
+        //                     this.node.emit('pageChange', {direction: -1, amount: 1});
+        //                 }
+        //             }
+        //             else if (e.centerVelocity.x < -this.threshold){
+        //                 if (this.draggedIndex === index && this.currentIndex === index) {
+        //                     this.node.emit('pageChange', {direction: 1,  amount:1});
+        //                 }
+        //             }
 
-
-
-
-        var gestureHandler = new GestureHandler(imageNode);
-            gestureHandler.on('drag', function(index, e) {
-                    this.force.set(e.centerDelta.x, 0, 0); // Add a force equal to change in X direction
-                    this.force.scale(20); // Scale the force up
-                    this.pages[index].box.applyForce(this.force); // Apply the force to the `Box` body
-
-                    if (e.centerVelocity.x > this.threshold) {
-                        if (this.draggedIndex === index && this.currentIndex === index) {
-                            // Move index to left
-                            this.node.emit('pageChange', {direction: -1, amount: 1});
-                        }
-                    }
-                    else if (e.centerVelocity.x < -this.threshold){
-                        if (this.draggedIndex === index && this.currentIndex === index) {
-                            this.node.emit('pageChange', {direction: 1,  amount:1});
-                        }
-                    }
-
-                    if (e.status === 'start') {
-                        this.draggedIndex = index;
-                    }
-                }.bind(this, i));
+        //             if (e.status === 'start') {
+        //                 this.draggedIndex = index;
+        //             }
+        //         }.bind(this, i));
 
         var el = new DOMElement(imageNode);
+        el.setProperty('background-color', '#ffffff')
         el.setProperty('backgroundImage', 'url(' + pageData[i] + ')');
         el.setProperty('background-repeat', 'no-repeat');
         el.setProperty('background-size', 'cover');
@@ -390,23 +456,3 @@ function _createPages(root, pageData) {
 }
 
 module.exports = Pager;
-
-
-
-function NameInput() {
-    Node.call(this);
-    this._domElement = new DOMElement(this, {
-        tagName: 'input',
-        attributes: {
-            placeholder: 'Your Name'
-        }
-    });
-    this.setProportionalSize(1, 0.5);
-
-    // Adding keyup as an UI Event allows the previously added DOMElement to
-    // instruct the DOMRenderer to act accordingly.
-    this.addUIEvent('keyup');
-}
-
-NameInput.prototype = Object.create(Node.prototype);
-NameInput.prototype.constructor = NameInput;
