@@ -381,6 +381,10 @@ function _createPages(root, pageData) {
             PageListenRepeat(imageNode);
         }
 
+        if(i === 5){
+            PageDragWord(imageNode, haha);
+        }
+
         // var gestureHandler = new GestureHandler(imageNode);
         //     gestureHandler.on('drag', function(index, e) {
         //             this.force.set(e.centerDelta.x, 0, 0); // Add a force equal to change in X direction
